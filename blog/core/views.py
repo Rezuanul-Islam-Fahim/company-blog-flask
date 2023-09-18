@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, render_template 
+from flask import Blueprint, render_template 
 
 core = Blueprint('core', __name__)
 
