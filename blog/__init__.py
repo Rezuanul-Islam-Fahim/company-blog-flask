@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 from blog.core.views import core
 from blog.error.handler import error
 
@@ -13,6 +14,10 @@ app.config.from_mapping(
     SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(basedir, 'data.sqlite'),
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view('auth.login')
 
 db = SQLAlchemy(app)
 Migrate(app, db)
