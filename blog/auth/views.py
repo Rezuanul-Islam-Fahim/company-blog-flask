@@ -51,3 +51,11 @@ def login():
             return redirect(next)
 
         return render_template('login.html', form=form)
+
+
+@auth.route('/logout')
+def logout():
+    logout_user()
+    flash('You\'ve successfully logged out')
+
+    return redirect(url_for('core.home'))
