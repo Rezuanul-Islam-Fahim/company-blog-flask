@@ -27,7 +27,7 @@ def register():
 
         return redirect(url_for('auth.login'))
 
-    return render_template('register.html')
+    return render_template('register.html', form=form)
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -50,4 +50,4 @@ def login():
 
             return redirect(next)
 
-        return render_template('login.html')
+        return render_template('login.html', form=form)
