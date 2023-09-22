@@ -54,6 +54,7 @@ def login():
 
 
 @auth.route('/logout')
+@login_required
 def logout():
     logout_user()
     flash('You\'ve successfully logged out')
