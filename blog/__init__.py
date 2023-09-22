@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from blog.core.views import core
 from blog.error.handler import error
+from blog.auth.views import auth
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,3 +25,4 @@ Migrate(app, db)
 
 app.register_blueprint(core)
 app.register_blueprint(error)
+app.register_blueprint(auth, url_prefix='/auth')
