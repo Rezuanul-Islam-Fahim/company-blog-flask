@@ -26,6 +26,7 @@ class Register(FlaskForm):
     pass_confirm = PasswordField(
         'Confirm Password', validators=[DataRequired()]
     )
+    submit = SubmitField('Submit')
 
     def validate_email(self, email):
         if User.query.filter_by(email=self.email.data).first():
