@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, url_for, render_template, request
 from flask_login import login_user, logout_user, login_required
-from forms import Login, Register, UpdateUser
+from blog.auth.forms import Login, Register, UpdateUser
 from blog.models import User
 from blog import db
 
@@ -50,7 +50,7 @@ def login():
 
             return redirect(next)
 
-        return render_template('login.html', form=form)
+    return render_template('login.html', form=form)
 
 
 @auth.route('/logout')
