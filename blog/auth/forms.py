@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo
 from wtforms import ValidationError
+from flask_wtf.file import FileField, FileAllowed
 from blog.models import User
 
 
@@ -35,3 +36,14 @@ class Register(FlaskForm):
     def validate_username(self, username):
         if User.query.filter_by(username=self.username.data).first():
             raise ValidationError('Username has been taken already')
+
+
+class UpdateUser(FlaskForm):
+
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    profile_img = FileField(
+        'Select Picture',
+        validators=[FileAllowed(['jpg', 'png'])]
+    )
+    submit = SubmitField('Submit')
