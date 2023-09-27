@@ -18,4 +18,4 @@ def add_profile_pic(profile_pic, username):
     pic.thumbnail((200, 200))
     pic.save(file_path)
 
-    return file_path
+    return storage_filename
