@@ -88,4 +88,9 @@ def profile():
         form.username.data = current_user.username
         form.email.data = current_user.email
 
-    return render_template('profile.html')
+    profile_img = url_for(
+        'static',
+        filename='profile_imgs/' + current_user.profile_img
+    )
+
+    return render_template('profile.html', form=form, profile_img=profile_img)
