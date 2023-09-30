@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-md">
+    <img src="{{ profile_img }}" height="200" alt="profile_img"/>
+    <br/>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.username.label }}
+        <br/>
+        {{ form.username() }}
+        <br/>
+        {{ form.email.label }}
+        <br/>
+        {{ form.email() }}
+        <br/>
+        {{ form.profile_img.label }}
+        <br/>
+        {{ form.profile_img() }}
+        <br/>
+        <br/>
+        {{ form.submit() }}
+    </form>
+</div>
+{% endblock %}

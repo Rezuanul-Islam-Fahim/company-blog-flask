@@ -63,7 +63,7 @@ def logout():
     return redirect(url_for('core.home'))
 
 
-@auth.route('/profile')
+@auth.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
 
@@ -72,9 +72,8 @@ def profile():
     if form.validate_on_submit():
 
         if form.profile_img.data:
-
             username = current_user.username
-            pic = add_profile_pic(form.picture_img.data, username)
+            pic = add_profile_pic(form.profile_img.data, username)
             current_user.profile_img = pic
 
         current_user.username = form.username.data
