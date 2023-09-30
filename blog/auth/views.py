@@ -64,6 +64,7 @@ def logout():
 
 
 @auth.route('/profile')
+@login_required
 def profile():
 
     form = UpdateUser()
