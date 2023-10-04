@@ -23,7 +23,9 @@ Migrate(app, db)
 
 from blog.core.views import core
 from blog.auth.views import auth
+from blog.posts.views import posts
 
 app.register_blueprint(core)
 app.register_blueprint(error)
 app.register_blueprint(auth, url_prefix='/auth')
+app.register_blueprint(posts, url_prefix='/posts')
