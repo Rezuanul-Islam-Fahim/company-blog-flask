@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, url_for
-
 from blog.models import User, Post
 
 posts = Blueprint('posts', __name__)
@@ -13,4 +12,9 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user).order_by(
         Post.datetime.desc()).paginate(page=page, per_page=5)
 
-    return render_template('user-blog-posts.html', user=user)
+    return render_template('user-blog-posts.html', user=user, posts=posts)
+
+
+@posts.route('blog_post')
+def blog_post():
+    pass
