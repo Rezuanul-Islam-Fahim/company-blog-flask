@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>User posts</h1>
+<div style="text-align: center;">
+    <h1>Welcome to the page for {{ user.username }}</h1>
+    <img width="200" src="{{ url_for('static', filename='profile_imgs/' + user.profile_img) }}" alt="" />
+</div>
 {% endblock %}
