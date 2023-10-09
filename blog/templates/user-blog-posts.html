@@ -16,5 +16,21 @@
     <p>{{ post.desc }}</p>
     <br />
     {% endfor %}
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% for page_num in post.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if post.page == page_num %}
+            <li class="page-item disabled"> {{ page_num }} </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="{{ url_for('posts.user_posts', username=user.username, page=page_num) }}">
+                    {{ page_num }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </nav>
 </div>
 {% endblock %}
