@@ -6,7 +6,7 @@
     <img width="200" src="{{ url_for('static', filename='profile_imgs/' + user.profile_img) }}" alt="" />
     <br />
 
-    {% for post in posts %}
+    {% for post in posts.items %}
     <a href="{{ url_for('posts.blog_post', id='post.id') }}">
         <h2>{{ post.title }}</h2>
     </a>
