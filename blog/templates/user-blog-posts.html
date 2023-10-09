@@ -12,6 +12,9 @@
     </a>
     <p>Published by: <a href="{{ url_for('posts.user_posts', username=user.username) }}">{{ user.username }}</a></p>
     <p>Published on: {{ post.datetime.strftime('%Y-%m-%d') }}</p>
+    <br />
+    <p>{{ post.desc }}</p>
+    <br />
     {% endfor %}
 </div>
 {% endblock %}
