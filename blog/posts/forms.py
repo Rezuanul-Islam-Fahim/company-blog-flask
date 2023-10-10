@@ -3,7 +3,7 @@ from wtforms import StringField, TextAreaField, SubmitField
 from wtforms.validators import DataRequired
 
 
-class BlogPost(FlaskForm):
+class BlogPostForm(FlaskForm):
 
     title = StringField('Title: ', validators=[DataRequired()])
     description = TextAreaField('Description: ', validators=[DataRequired()])

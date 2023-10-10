@@ -53,10 +53,10 @@ class Post(db.Model):
     )
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __init__(self, title, desc, user_id):
+    def __init__(self, title, desc, author_id):
         self.title = title
         self.desc = desc
-        self.user_id = user_id
+        self.author_id = author_id
 
     def __repr__(self):
         return f'Title: {self.title}, datetime: {self.datetime}, desc: {self.desc}'
