@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect
+from flask import Blueprint, render_template, request, url_for, redirect, flash
 from flask_login import current_user, login_required
 from blog import db
 from blog.models import User, Post
@@ -39,6 +39,7 @@ def create_post():
         )
         db.session.add(new_post)
         db.session.commit()
+        flash('New post created')
 
         return redirect(url_for('core.home'))
 
