@@ -43,4 +43,4 @@ def create_post():
 
         return redirect(url_for('core.home'))
 
-    return render_template('create-post.html')
+    return render_template('create-post.html', form=form)
