@@ -21,7 +21,7 @@
         <ul class="pagination justify-content-center">
             {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if posts.page == page_num %}
-            <li class="page-item disabled"> {{ page_num }} </li>
+            <li class="page-item disabled"> <a class="page-link">{{ page_num }}</a> </li>
             {% else %}
             <li class="page-item">
                 <a class="page-link" href="{{ url_for('posts.user_posts', username=user.username, page=page_num) }}">
