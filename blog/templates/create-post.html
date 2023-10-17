@@ -2,13 +2,15 @@
 
 {% block content %}
 <div style="text-align:center">
-    <h1>Create Post</h1>
-    <br/>
-    {{ form.hidden_tag() }}
-    {{ form.title.label }} <br/>
-    {{ form.title() }} <br/>
-    {{ form.description.label }} <br/>
-    {{ form.description() }} <br/>
-    {{ form.submit() }}
+    <form method="POST">
+        <h1>Create Post</h1>
+        <br />
+        {{ form.hidden_tag() }}
+        {{ form.title.label }} <br />
+        {{ form.title() }} <br />
+        {{ form.description.label }} <br />
+        {{ form.description() }} <br />
+        {{ form.submit() }}
+    </form>
 </div>
 {% endblock %}
