@@ -62,16 +62,16 @@ def update_post(blog_post_id):
 
     if form.validate_on_submit():
 
-        post.title = form.title
-        post.description = form.description
+        post.title = form.title.data
+        post.desc = form.description.data
         db.session.commit()
         flash('Post updated')
 
         return redirect(url_for('posts.blog_post', blog_post_id=post.id))
 
     elif request.method == 'GET':
-        form.title = post.title
-        form.description = post.description
+        form.title.data = post.title
+        form.description.data = post.desc
 
     return render_template('update-post.html', form=form)
 
