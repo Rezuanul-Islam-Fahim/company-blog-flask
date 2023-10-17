@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash
+from flask import Blueprint, render_template, request, url_for, redirect, flash, abort
 from flask_login import current_user, login_required
 from blog import db
 from blog.models import User, Post
@@ -47,3 +47,31 @@ def create_post():
         return redirect(url_for('core.home'))
 
     return render_template('create-post.html', form=form)
+
+
+@posts.route('/<blog_post_id>/update', methods=['POST', 'GET'])
+@login_required
+def update_post(blog_post_id):
+
+    post = Post.query.get_or_404(blog_post_id)
+
+    if post.author != current_user:
+        abort(403)
+    
+    form = BlogPostForm()
+
+    if form.validate_on_submit():
+
+        post.title = form.title
+        post.description = form.description
+        db.session.commit()
+        flash('Post updated')
+
+        return redirect(url_for('posts.blog_post', blog_post_id=post.id))
+    
+    elif request.method == 'GET':
+        form.title = post.title
+        form.description = post.description
+
+    return render_template('update-post.html', form=form)
+    
