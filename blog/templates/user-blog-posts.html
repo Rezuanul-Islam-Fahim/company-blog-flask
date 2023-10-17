@@ -7,7 +7,7 @@
     <br />
 
     {% for post in posts.items %}
-    <a href="{{ url_for('posts.blog_posts', id='post.id') }}">
+    <a href="{{ url_for('posts.blog_post', blog_post_id=post.id) }}">
         <h2>{{ post.title }}</h2>
     </a>
     <p>Published by: <a href="{{ url_for('posts.user_posts', username=user.username) }}">{{ user.username }}</a></p>
@@ -20,7 +20,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-            {% if post.page == page_num %}
+            {% if posts.page == page_num %}
             <li class="page-item disabled"> {{ page_num }} </li>
             {% else %}
             <li class="page-item">
