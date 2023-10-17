@@ -10,7 +10,7 @@
     <a href="{{ url_for('posts.blog_post', blog_post_id=post.id) }}">
         <h2>{{ post.title }}</h2>
     </a>
-    <p>Published by: {{ user.username }}</p>
+    <p>Published by: {{ post.author.username }}</p>
     <p>Published on: {{ post.datetime.strftime('%Y-%m-%d') }}</p>
     <br />
     <p>{{ post.desc }}</p>
