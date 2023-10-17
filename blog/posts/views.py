@@ -19,7 +19,7 @@ def user_posts(username):
     return render_template('user-blog-posts.html', user=user, posts=posts)
 
 
-@posts.route('/<blog_post_id>')
+@posts.route('/<int:blog_post_id>')
 def blog_post(blog_post_id):
 
     post = Post.query.get_or_404(blog_post_id)
@@ -49,7 +49,7 @@ def create_post():
     return render_template('create-post.html', form=form)
 
 
-@posts.route('/<blog_post_id>/update', methods=['POST', 'GET'])
+@posts.route('/<int:blog_post_id>/update', methods=['POST', 'GET'])
 @login_required
 def update_post(blog_post_id):
 
