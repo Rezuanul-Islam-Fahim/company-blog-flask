@@ -36,8 +36,8 @@ def create_post():
     if form.validate_on_submit():
 
         new_post = Post(
-            title=form.title,
-            desc=form.description,
+            title=form.title.data,
+            desc=form.description.data,
             author_id=current_user.id
         )
         db.session.add(new_post)
