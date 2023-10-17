@@ -57,7 +57,7 @@ def update_post(blog_post_id):
 
     if post.author != current_user:
         abort(403)
-    
+
     form = BlogPostForm()
 
     if form.validate_on_submit():
@@ -68,10 +68,25 @@ def update_post(blog_post_id):
         flash('Post updated')
 
         return redirect(url_for('posts.blog_post', blog_post_id=post.id))
-    
+
     elif request.method == 'GET':
         form.title = post.title
         form.description = post.description
 
     return render_template('update-post.html', form=form)
-    
+
+
+@posts.route('/<int:blog_post_id>/delete')
+@login_required
+def delete_post(blog_post_id):
+
+    post = Post.query.get_or_404(blog_post_id)
+
+    if post.author != current_user:
+        abort(403)
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('Blog post deleted')
+
+    return redirect(url_for('core.home'))
