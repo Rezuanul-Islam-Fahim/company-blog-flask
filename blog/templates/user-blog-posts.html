@@ -19,7 +19,7 @@
 
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            {% for page_num in post.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
             {% if post.page == page_num %}
             <li class="page-item disabled"> {{ page_num }} </li>
             {% else %}
