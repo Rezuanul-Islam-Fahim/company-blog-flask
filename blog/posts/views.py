@@ -24,7 +24,7 @@ def blog_post(blog_post_id):
 
     post = Post.query.get_or_404(blog_post_id)
 
-    return render_template('post.html', post=post)
+    return render_template('blog-post.html', post=post)
 
 
 @posts.route('/create', methods=['POST', 'GET'])
