@@ -1,21 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-sm w-25 p-2 my-5">
-    <div class="p-5 text-center bg-body-tertiary rounded-3">
-        <h1 class="text-body-emphasis">Login</h1>
+<div class="container-sm my-5" style="width:400px">
+    <div class="p-5 bg-body-tertiary rounded-3">
+        <h1 class="text-body-emphasis mb-4">Please Log In</h1>
         <form method="POST">
             {{ form.hidden_tag() }}
-            {{ form.email.label }}
-            <br/>
-            {{ form.email() }}
-            <br/>
-            {{ form.password.label }}
-            <br/>
-            {{ form.password() }}
-            <br/>
-            <br/>
-            {{ form.submit() }}
+            <div class="mb-3">
+                <label class="form-label">{{ form.email.label }}</label>
+                {{ form.email(class='form-control') }}
+            </div>
+            <div class="mb-4">
+                <label class="form-label">{{ form.password.label }}</label>
+                {{ form.password(class='form-control') }}
+            </div>
+            {{ form.submit(class='btn btn-primary w-100 py-2') }}
         </form>
     </div>
 </div>
