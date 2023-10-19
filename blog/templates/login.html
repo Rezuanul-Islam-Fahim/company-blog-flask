@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container-md text-center">
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.email.label }}
-        <br/>
-        {{ form.email() }}
-        <br/>
-        {{ form.password.label }}
-        <br/>
-        {{ form.password() }}
-        <br/>
-        <br/>
-        {{ form.submit() }}
-    </form>
+<div class="container-sm w-25 p-2 my-5">
+    <div class="p-5 text-center bg-body-tertiary rounded-3">
+        <h1 class="text-body-emphasis">Login</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.email.label }}
+            <br/>
+            {{ form.email() }}
+            <br/>
+            {{ form.password.label }}
+            <br/>
+            {{ form.password() }}
+            <br/>
+            <br/>
+            {{ form.submit() }}
+        </form>
+    </div>
 </div>
 {% endblock %}
