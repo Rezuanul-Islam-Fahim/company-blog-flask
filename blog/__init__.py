@@ -5,12 +5,10 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from blog.error.handler import error
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 app = Flask(__name__)
 app.config.from_mapping(
-    SECRET_KEY='my_secret_key',
-    SQLALCHEMY_DATABASE_URI='sqlite:///' + os.path.join(basedir, 'data.sqlite'),
+    SECRET_KEY=os.environ.get('SECRET_KEY'),
+    SQLALCHEMY_DATABASE_URI=os.environ.get('DATABASE_URI'),
     SQLALCHEMY_TRACK_MODIFICATIONS=False
 )
 
