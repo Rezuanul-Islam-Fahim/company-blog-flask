@@ -1,6 +1,5 @@
 .vscode/
 env/
-migrations/
 __pycache__/
 *.pyc
 *.sqlite
