@@ -41,8 +41,6 @@ class Post(db.Model):
 
     __tablename__ = 'posts'
 
-    users = db.relationship(User)
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), nullable=False)
     desc = db.Column(db.Text, nullable=False)
