@@ -1,16 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="text-align:center">
-    <form method="POST">
-        <h1>Create Post</h1>
-        <br />
-        {{ form.hidden_tag() }}
-        {{ form.title.label }} <br />
-        {{ form.title() }} <br />
-        {{ form.description.label }} <br />
-        {{ form.description() }} <br />
-        {{ form.submit() }}
-    </form>
+<div class="container-fluid my-5 text-center">
+    <div class="col-lg-6 mx-auto">
+        <div class="p-5 bg-body-tertiary rounded-3 text-start">
+            <h1 class="fs-2 fw-semibold mb-4">Create Post</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    <label class="form-label">{{ form.title.label }}</label>
+                    {{ form.title(class='form-control') }}
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">{{ form.description.label }}</label>
+                    {{ form.description(class='form-control', rows='5') }}
+                </div>
+                {{ form.submit(class='btn btn-primary w-100 py-2') }}
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock %}
