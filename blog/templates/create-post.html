@@ -2,19 +2,19 @@
 
 {% block content %}
 <div class="container-fluid my-5 text-center">
-    <div class="col-md-6 mx-auto p-5 bg-body-tertiary rounded-3 text-start">
+    <div class="col-md-6 mx-auto p-5 bg-body-tertiary rounded-3">
         <h1 class="fs-2 fw-semibold mb-4">Create Post</h1>
         <form method="POST">
             {{ form.hidden_tag() }}
-            <div class="mb-3">
+            <div class="mb-3 text-start">
                 <label class="form-label">{{ form.title.label }}</label>
                 {{ form.title(class='form-control') }}
             </div>
-            <div class="mb-3">
+            <div class="mb-3 text-start">
                 <label class="form-label">{{ form.description.label }}</label>
                 {{ form.description(class='form-control', rows='5') }}
             </div>
-            {{ form.submit(class='btn btn-primary w-100 py-2') }}
+            {{ form.submit(class='btn btn-primary text-center w-50 py-2') }}
         </form>
     </div>
 </div>
