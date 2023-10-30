@@ -8,24 +8,24 @@ from blog.models import User
 
 class Login(FlaskForm):
 
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired(), Email()])
+    password = PasswordField('Password:', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
 class Register(FlaskForm):
 
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired(), Email()])
     password = PasswordField(
-        'Password',
+        'Password:',
         validators=[
             DataRequired(),
             EqualTo('pass_confirm', message='Passwords must match')
         ]
     )
     pass_confirm = PasswordField(
-        'Confirm Password', validators=[DataRequired()]
+        'Confirm Password:', validators=[DataRequired()]
     )
     submit = SubmitField('Submit')
 
@@ -40,10 +40,10 @@ class Register(FlaskForm):
 
 class UpdateUser(FlaskForm):
 
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username:', validators=[DataRequired()])
+    email = StringField('Email:', validators=[DataRequired(), Email()])
     profile_img = FileField(
-        'Select Picture',
+        'Select Picture:',
         validators=[FileAllowed(['jpg', 'png'])]
     )
     submit = SubmitField('Submit')
