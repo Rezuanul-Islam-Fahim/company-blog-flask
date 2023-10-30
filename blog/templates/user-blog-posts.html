@@ -1,20 +1,34 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="text-align: center;">
-    <h1>Welcome to the page for {{ user.username }}</h1>
-    <img width="200" src="{{ url_for('static', filename='profile_imgs/' + user.profile_img) }}" alt="" />
-    <br />
+<div class="container-fluid">
+    <div class="my-5 text-center">
+        <div class="col-md-8 mx-auto p-4 bg-body-tertiary rounded-3 lh-1">
+            <h1 class="fs-2 fw-semibold">{{ user.username }}</h1>
+            <p class="fs-6 fw-semibold mb-4">{{ user.email }}</p>
+            <img style="border-radius: 50%;" height="120"
+                src="{{ url_for('static', filename='profile_imgs/' + user.profile_img) }}" alt="profile_img" />
+        </div>
+    </div>
 
     {% for post in posts.items %}
-    <a href="{{ url_for('posts.blog_post', blog_post_id=post.id) }}">
-        <h2>{{ post.title }}</h2>
-    </a>
-    <p>Published by: {{ post.author.username }}</p>
-    <p>Published on: {{ post.datetime.strftime('%Y-%m-%d') }}</p>
-    <br />
-    <p>{{ post.desc }}</p>
-    <br />
+    <div class="col-md-8 mx-auto bg-body-tertiary rounded-3 p-5 my-4 text-start lh-1">
+        <a class="link-underline link-underline-opacity-0"
+            href="{{ url_for('posts.blog_post', blog_post_id=post.id) }}">
+            <h2 class="fs-2 fw-semibold">{{ post.title }}</h2>
+        </a>
+        <p>Published by:
+            <a class="link-underline link-underline-opacity-0"
+                href="{{ url_for('posts.user_posts', username=post.author.username) }}">
+                {{post.author.username}}
+            </a>
+        </p>
+        <p>Published on: {{ post.datetime.strftime('%Y-%m-%d') }}</p>
+        <br />
+        <a href="{{ url_for('posts.blog_post', blog_post_id=post.id) }}" class="btn btn-primary" style="width: 200px;">
+            Read Post
+        </a>
+    </div>
     {% endfor %}
 
     <nav aria-label="User blog post navigation">
