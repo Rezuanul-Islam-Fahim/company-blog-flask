@@ -10,7 +10,7 @@ class Login(FlaskForm):
 
     email = StringField('Email:', validators=[DataRequired(), Email()])
     password = PasswordField('Password:', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Login')
 
 
 class Register(FlaskForm):
@@ -27,7 +27,7 @@ class Register(FlaskForm):
     pass_confirm = PasswordField(
         'Confirm Password:', validators=[DataRequired()]
     )
-    submit = SubmitField('Submit')
+    submit = SubmitField('Register')
 
     def validate_email(self, email):
         if User.query.filter_by(email=self.email.data).first():
@@ -46,4 +46,4 @@ class UpdateUser(FlaskForm):
         'Select Picture:',
         validators=[FileAllowed(['jpg', 'png'])]
     )
-    submit = SubmitField('Submit')
+    submit = SubmitField('Update')
