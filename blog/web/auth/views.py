@@ -1,9 +1,10 @@
 from flask import Blueprint, flash, redirect, url_for, render_template, request
 from flask_login import login_user, logout_user, login_required, current_user
-from blog.auth.forms import Login, Register, UpdateUser
-from blog.models import User
-from blog.auth.picture_handler import add_profile_pic
-from blog import db
+
+from ... import db
+from ...models import User
+from ..auth.forms import Login, Register, UpdateUser
+from ..auth.picture_handler import add_profile_pic
 
 auth = Blueprint('auth', __name__)
 
