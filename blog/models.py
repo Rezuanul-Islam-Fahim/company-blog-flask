@@ -35,7 +35,15 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return 'Username: {self.username}, Email: {self.email}'
+        return f'Username: {self.username}, Email: {self.email}'
+
+    def json(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'email': self.email,
+            'profile_img': self.profile_img
+        }
 
 
 class Post(db.Model):
