@@ -12,18 +12,17 @@ app = Flask(__name__)
 app.config.from_mapping(
     SECRET_KEY=os.environ.get('SECRET_KEY'),
     SQLALCHEMY_DATABASE_URI=database_uri,
-    SQLALCHEMY_TRACK_MODIFICATIONS=False
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    JWT_AUTH_URL_RULE='/api/auth/login',
+    JWT_AUTH_USERNAME_KEY='email'
 )
 
 login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'auth.login'
-
 db = SQLAlchemy(app)
 Migrate(app, db)
 
-from .web import initiate_web_app
-from .api import initiate_api
+from .web import init_web_app
+from .api import init_api
 
-initiate_web_app()
-initiate_api()
+init_web_app()
+init_api()
