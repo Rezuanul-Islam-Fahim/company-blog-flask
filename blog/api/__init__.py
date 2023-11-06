@@ -9,4 +9,4 @@ JWT(app, authentication, identity)
 
 
 def init_api():
-    api.add_resource(RegisterApi, '/api/register')
+    api.add_resource(RegisterApi, '/api/auth/register')
