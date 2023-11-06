@@ -1,5 +1,6 @@
 from flask import request, jsonify
 from flask_restful import Resource
+from sqlalchemy import or_
 from ... import db
 from ...models import User
 
@@ -8,15 +9,18 @@ class RegisterApi(Resource):
 
     def post(self):
         req_json = request.get_json()
-        user_by_name = User.query.filter_by(
-            username=req_json['username']
+        user = User.query.filter(
+            or_(
+                User.username == req_json['username'],
+                User.email == req_json['email']
+            )
         ).first()
-        user_by_email = User.query.filter_by(email=req_json['email']).first()
 
-        if user_by_name is not None:
-            return jsonify(error={'message': 'Username is already taken'})
-        elif user_by_email is not None:
-            return jsonify(error={'message': 'Email is already taken'})
+        if user:
+            if user.username == req_json['username']:
+                return jsonify(error={'message': 'Username is already taken'})
+            elif user.email == req_json['email']:
+                return jsonify(error={'message': 'Email is already taken'})
 
         new_user = User(
             username=req_json['username'],
