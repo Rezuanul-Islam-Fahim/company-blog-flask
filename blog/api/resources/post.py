@@ -27,4 +27,4 @@ class PostApi(Resource):
         db.session.add(new_post)
         db.session.commit()
 
-        return jsonify(message='Post created')
+        return jsonify(message='Post created', data=new_post.json())
