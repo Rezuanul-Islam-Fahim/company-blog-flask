@@ -36,17 +36,21 @@ class PostApi(Resource):
         post = Post.query.get(post_id)
 
         if post:
-            if req_json.get('title'):
-                post.title = req_json.get('title')
-            if req_json.get('description'):
-                post.desc = req_json.get('description')
-            if req_json.get('datetime'):
-                post.datetime = req_json.get('datetime')
+            if post.author.id == current_identity.id:
+                if req_json.get('title'):
+                    post.title = req_json.get('title')
+                if req_json.get('description'):
+                    post.desc = req_json.get('description')
+                if req_json.get('datetime'):
+                    post.datetime = req_json.get('datetime')
 
-            db.session.add(post)
-            db.session.commit()
+                db.session.add(post)
+                db.session.commit()
 
-            return jsonify(message='Post updated', data=post.json())
+                return jsonify(message='Post updated', data=post.json())
+
+            else:
+                return jsonify(error={'message': 'Post author verfication failed'})
 
         else:
             return jsonify(error={'message': f'No post found with id {post_id}'})
