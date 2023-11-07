@@ -4,7 +4,7 @@ from flask_jwt import jwt_required
 from ...models import Post
 
 
-class PostsApi(Resource):
+class PostApi(Resource):
 
     def get(self):
         post_id = request.args.get('id')
