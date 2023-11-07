@@ -67,3 +67,12 @@ class Post(db.Model):
 
     def __repr__(self):
         return f'Title: {self.title}, datetime: {self.datetime}, desc: {self.desc}'
+
+    def json(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'description': self.desc,
+            'author_id': self.author_id,
+            'datetime': self.datetime
+        }
