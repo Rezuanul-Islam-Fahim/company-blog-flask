@@ -28,3 +28,21 @@ class PostApi(Resource):
         db.session.commit()
 
         return jsonify(message='Post created', data=new_post.json())
+
+    @jwt_required()
+    def put(self):
+        req_json = request.get_json()
+        post_id = request.args.get('id')
+        post = Post.query.get(post_id)
+
+        if req_json.get('title'):
+            post.title = req_json.get('title')
+        if req_json.get('description'):
+            post.desc = req_json.get('description')
+        if req_json.get('datetime'):
+            post.datetime = req_json.get('datetime')
+
+        db.session.add(post)
+        db.session.commit()
+
+        return jsonify(message='Post updated', data=post.json())
