@@ -54,3 +54,21 @@ class PostApi(Resource):
 
         else:
             return jsonify(error={'message': f'No post found with id {post_id}'})
+
+    @jwt_required()
+    def delete(self):
+        post_id = request.args.get('id')
+        post = Post.query.get(post_id)
+
+        if post:
+            if post.author.id == current_identity.id:
+                db.session.delete(post)
+                db.session.commit()
+
+                return jsonify(message='Post deleted')
+
+            else:
+                return jsonify(error={'message': 'Post author verfication failed'})
+
+        else:
+            return jsonify(error={'message': f'No post found with id {post_id}'})
