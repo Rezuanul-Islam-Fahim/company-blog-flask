@@ -8,7 +8,7 @@ from ..posts.forms import BlogPostForm
 posts = Blueprint('posts', __name__)
 
 
-@posts.route('/<username>')
+@posts.route('/user_posts/<username>')
 def user_posts(username):
 
     user = User.query.filter_by(username=username).first_or_404()
