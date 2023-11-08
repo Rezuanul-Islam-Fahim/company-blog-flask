@@ -4,6 +4,7 @@ from .. import app
 from .jwt_secure_handler import authentication, identity
 from .resources.register import RegisterApi
 from .resources.posts import PostsApi
+from .resources.account import AccountApi
 
 
 def init_api():
@@ -12,3 +13,4 @@ def init_api():
 
     api.add_resource(RegisterApi, '/auth/register')
     api.add_resource(PostsApi, '/posts')
+    api.add_resource(AccountApi, '/account')
