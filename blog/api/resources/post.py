@@ -1,7 +1,7 @@
 from flask import request, jsonify
 from flask_restful import Resource
 from flask_jwt import jwt_required, current_identity
-from ...models import Post
+from ...models import Post, User
 from ... import db
 
 
@@ -9,12 +9,27 @@ class PostApi(Resource):
 
     def get(self):
         post_id = request.args.get('id')
-        post = Post.query.get(post_id)
+        user_id = request.args.get('user_id')
 
-        if post:
-            return jsonify(data=post.json())
-        else:
-            return jsonify(error={'message': f'No post found with id {post_id}'})
+        if post_id:
+            post = Post.query.get(post_id)
+
+            if post:
+                return jsonify(data=post.json())
+            else:
+                return jsonify(error={'message': f'No post found with id {post_id}'})
+
+        elif user_id:
+            user = User.query.get(user_id)
+
+            if user:
+                user_posts = Post.query.filter_by(author_id=user_id).all()
+
+                return jsonify(
+                    data=[post.json() for post in user_posts]
+                )
+            else:
+                return jsonify(error={'message': f'No user found with id {user_id}'})
 
     @jwt_required()
     def post(self):
