@@ -33,7 +33,7 @@ class PostApi(Resource):
                 return jsonify(error={'message': f'No user found with id {user_id}'})
 
         else:
-            posts = Post.query.all()
+            posts = Post.query.order_by(Post.datetime.desc()).all()
 
             return jsonify(
                 data=[post.json() for post in posts]
