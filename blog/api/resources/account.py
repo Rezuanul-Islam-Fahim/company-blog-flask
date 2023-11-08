@@ -11,7 +11,15 @@ class AccountApi(Resource):
         user_id = request.args.get('user_id')
         user = User.query.get(user_id)
 
-        if user:
+        if user_id is None:
+            return make_response(
+                jsonify(
+                    error={'message': 'Please provide (user_id) parameter'}
+                ),
+                404
+            )
+
+        elif user:
             if user.id == current_identity.id:
                 return jsonify(user=user.json())
             else:
