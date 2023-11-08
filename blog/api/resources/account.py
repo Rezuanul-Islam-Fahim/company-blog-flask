@@ -16,7 +16,7 @@ class AccountApi(Resource):
                 jsonify(
                     error={'message': 'Please provide (user_id) parameter'}
                 ),
-                404
+                405
             )
 
         elif user:
