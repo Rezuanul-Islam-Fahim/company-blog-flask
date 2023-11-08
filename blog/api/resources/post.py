@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, make_response, jsonify
 from flask_restful import Resource
 from flask_jwt import jwt_required, current_identity
 from ...models import Post, User
@@ -17,7 +17,12 @@ class PostApi(Resource):
             if post:
                 return jsonify(data=post.json())
             else:
-                return jsonify(error={'message': f'No post found with id {post_id}'})
+                return make_response(
+                    jsonify(
+                        error={'message': f'No post found with id {post_id}'}
+                    ),
+                    404
+                )
 
         elif user_id:
             user = User.query.get(user_id)
@@ -26,18 +31,19 @@ class PostApi(Resource):
                 user_posts = Post.query.filter_by(author_id=user_id) \
                     .order_by(Post.datetime.desc()).all()
 
-                return jsonify(
-                    data=[post.json() for post in user_posts]
-                )
+                return jsonify(data=[post.json() for post in user_posts])
             else:
-                return jsonify(error={'message': f'No user found with id {user_id}'})
+                return make_response(
+                    jsonify(
+                        error={'message': f'No user found with id {user_id}'}
+                    ),
+                    404
+                )
 
         else:
             posts = Post.query.order_by(Post.datetime.desc()).all()
 
-            return jsonify(
-                data=[post.json() for post in posts]
-            )
+            return jsonify(data=[post.json() for post in posts])
 
     @jwt_required()
     def post(self):
@@ -50,7 +56,10 @@ class PostApi(Resource):
         db.session.add(new_post)
         db.session.commit()
 
-        return jsonify(message='Post created', data=new_post.json())
+        return make_response(
+            jsonify(data=new_post.json(), message='Post created'),
+            201
+        )
 
     @jwt_required()
     def put(self):
@@ -73,10 +82,18 @@ class PostApi(Resource):
                 return jsonify(message='Post updated', data=post.json())
 
             else:
-                return jsonify(error={'message': 'Post author verfication failed'})
+                return make_response(
+                    jsonify(
+                        error={'message': 'Post author verfication failed'}
+                    ),
+                    403
+                )
 
         else:
-            return jsonify(error={'message': f'No post found with id {post_id}'})
+            return make_response(
+                jsonify(error={'message': f'No post found with id {post_id}'}),
+                404
+            )
 
     @jwt_required()
     def delete(self):
@@ -91,7 +108,17 @@ class PostApi(Resource):
                 return jsonify(message='Post deleted')
 
             else:
-                return jsonify(error={'message': 'Post author verfication failed'})
+                return make_response(
+                    jsonify(
+                        error={'message': 'Post author verfication failed'}
+                    ),
+                    403
+                )
 
         else:
-            return jsonify(error={'message': f'No post found with id {post_id}'})
+            return make_response(
+                jsonify(
+                    error={'message': f'No post found with id {post_id}'}
+                ),
+                404
+            )

@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, Response, json, jsonify
 from flask_restful import Resource
 from sqlalchemy import or_
 from ... import db
@@ -18,9 +18,21 @@ class RegisterApi(Resource):
 
         if user:
             if user.username == req_json['username']:
-                return jsonify(error={'message': 'Username is already taken'})
+                return Response(
+                    response=json.dumps(
+                        {'error': {'message': 'Username is already taken'}}
+                    ),
+                    status=403,
+                    mimetype='application/json'
+                )
             elif user.email == req_json['email']:
-                return jsonify(error={'message': 'Email is already taken'})
+                return Response(
+                    response=json.dumps(
+                        {'error': {'message': 'Email is already taken'}}
+                    ),
+                    status=403,
+                    mimetype='application/json'
+                )
 
         new_user = User(
             username=req_json['username'],
