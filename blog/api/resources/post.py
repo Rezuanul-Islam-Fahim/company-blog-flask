@@ -31,6 +31,13 @@ class PostApi(Resource):
             else:
                 return jsonify(error={'message': f'No user found with id {user_id}'})
 
+        else:
+            posts = Post.query.all()
+
+            return jsonify(
+                data=[post.json() for post in posts]
+            )
+
     @jwt_required()
     def post(self):
         req_json = request.get_json()
