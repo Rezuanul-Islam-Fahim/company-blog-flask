@@ -8,7 +8,7 @@ from ... import db
 class PostApi(Resource):
 
     def get(self):
-        post_id = request.args.get('id')
+        post_id = request.args.get('post_id')
         user_id = request.args.get('user_id')
 
         if post_id:
