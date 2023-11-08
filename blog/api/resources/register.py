@@ -11,12 +11,22 @@ class RegisterApi(Resource):
         req_json = request.get_json()
         user = User.query.filter(
             or_(
-                User.username == req_json['username'],
-                User.email == req_json['email']
+                User.username == req_json.get('username'),
+                User.email == req_json.get('email')
             )
         ).first()
 
-        if user:
+        if req_json.get('username') is None or \
+                req_json.get('email') is None or \
+                req_json.get('password') is None:
+            return Response(
+                response=json.dumps(
+                    {'error': {'message': 'Please provide username, email & password '}}
+                ),
+                status=405,
+                mimetype='application/json'
+            )
+        elif user:
             if user.username == req_json['username']:
                 return Response(
                     response=json.dumps(
