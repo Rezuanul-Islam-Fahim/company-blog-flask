@@ -74,7 +74,7 @@ class PostsApi(Resource):
                 ),
                 405
             )
-        
+
         elif post:
             if post.author.id == current_identity.id:
                 if req_json.get('title'):
@@ -108,7 +108,15 @@ class PostsApi(Resource):
         post_id = request.args.get('id')
         post = Post.query.get(post_id)
 
-        if post:
+        if post_id is None:
+            return make_response(
+                jsonify(
+                    error={'message': 'Please provide (post_id) parameter'}
+                ),
+                405
+            )
+
+        elif post:
             if post.author.id == current_identity.id:
                 db.session.delete(post)
                 db.session.commit()
