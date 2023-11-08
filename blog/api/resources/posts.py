@@ -5,7 +5,7 @@ from ...models import Post, User
 from ... import db
 
 
-class PostApi(Resource):
+class PostsApi(Resource):
 
     def get(self):
         post_id = request.args.get('post_id')
