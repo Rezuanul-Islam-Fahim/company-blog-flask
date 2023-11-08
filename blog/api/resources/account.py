@@ -11,7 +11,8 @@ class AccountApi(Resource):
         user = User.query.get(user_id)
 
         if user:
-            pass
+            return jsonify(user=user.json())
+
         else:
             return make_response(
                 jsonify(error={'message': f'No user found with id {user_id}'}),
