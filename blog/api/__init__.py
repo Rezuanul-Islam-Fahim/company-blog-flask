@@ -5,10 +5,10 @@ from .jwt_secure_handler import authentication, identity
 from .resources.register import RegisterApi
 from .resources.posts import PostsApi
 
-api = Api(app)
-JWT(app, authentication, identity)
-
 
 def init_api():
-    api.add_resource(RegisterApi, '/api/auth/register')
-    api.add_resource(PostsApi, '/api/posts')
+    api = Api(app, prefix='/api')
+    JWT(app, authentication, identity)
+
+    api.add_resource(RegisterApi, '/auth/register')
+    api.add_resource(PostsApi, '/posts')
