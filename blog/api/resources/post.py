@@ -23,7 +23,8 @@ class PostApi(Resource):
             user = User.query.get(user_id)
 
             if user:
-                user_posts = Post.query.filter_by(author_id=user_id).all()
+                user_posts = Post.query.filter_by(author_id=user_id) \
+                    .order_by(Post.datetime.desc()).all()
 
                 return jsonify(
                     data=[post.json() for post in user_posts]
