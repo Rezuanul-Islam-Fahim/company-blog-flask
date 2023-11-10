@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, url_for, redirect, flash, abort
+from flask import (
+    Blueprint, render_template, request, url_for, redirect, flash, abort
+)
 from flask_login import current_user, login_required
-
 from ... import db
 from ...models import User, Post
 from ..posts.forms import BlogPostForm
@@ -42,7 +43,7 @@ def create_post():
         )
         db.session.add(new_post)
         db.session.commit()
-        flash('New post created')
+        flash('New post has been created')
 
         return redirect(url_for('core.home'))
 
@@ -65,7 +66,7 @@ def update_post(blog_post_id):
         post.title = form.title.data
         post.desc = form.description.data
         db.session.commit()
-        flash('Post updated')
+        flash('Post has been updated')
 
         return redirect(url_for('posts.blog_post', blog_post_id=post.id))
 
@@ -87,6 +88,6 @@ def delete_post(blog_post_id):
 
     db.session.delete(post)
     db.session.commit()
-    flash('Blog post deleted')
+    flash('Post has been deleted')
 
     return redirect(url_for('core.home'))
