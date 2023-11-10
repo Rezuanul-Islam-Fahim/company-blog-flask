@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -14,7 +15,8 @@ app.config.from_mapping(
     SQLALCHEMY_DATABASE_URI=database_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     JWT_AUTH_URL_RULE='/api/auth/login',
-    JWT_AUTH_USERNAME_KEY='email'
+    JWT_AUTH_USERNAME_KEY='email',
+    JWT_EXPIRATION_DELTA=timedelta(seconds=1800)
 )
 
 login_manager = LoginManager()
