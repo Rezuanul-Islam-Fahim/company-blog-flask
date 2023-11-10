@@ -25,7 +25,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
 
-        flash('Registration successful')
+        flash('Successfully created a new account')
 
         return redirect(url_for('auth.login'))
 
@@ -43,7 +43,7 @@ def login():
 
         if user is not None and user.check_password(form.password.data):
             login_user(user)
-            flash('Login successful')
+            flash('You have successfully logged in')
 
             next = request.args.get('next')
 
@@ -59,7 +59,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash('You\'ve successfully logged out')
+    flash('You have been logged out')
 
     return redirect(url_for('core.home'))
 
@@ -80,7 +80,7 @@ def profile():
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
-        flash('User profile updated')
+        flash('Your profile has been updated')
 
         return redirect(url_for('auth.profile'))
 
