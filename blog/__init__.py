@@ -16,7 +16,8 @@ app.config.from_mapping(
     SQLALCHEMY_TRACK_MODIFICATIONS=False,
     JWT_AUTH_URL_RULE='/api/auth/login',
     JWT_AUTH_USERNAME_KEY='email',
-    JWT_EXPIRATION_DELTA=timedelta(seconds=1800)
+    JWT_EXPIRATION_DELTA=timedelta(seconds=1800),
+    PROPAGATE_EXCEPTIONS=True
 )
 
 login_manager = LoginManager()
