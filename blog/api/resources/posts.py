@@ -48,18 +48,30 @@ class PostsApi(Resource):
     @jwt_required()
     def post(self):
         req_json = request.get_json()
-        new_post = Post(
-            title=req_json['title'],
-            desc=req_json['description'],
-            author_id=current_identity.id
-        )
-        db.session.add(new_post)
-        db.session.commit()
+        title = req_json.get('title')
+        desc = req_json.get('description')
 
-        return make_response(
-            jsonify(data=new_post.json(), message='Post created'),
-            201
-        )
+        if title is None or desc is None:
+            return make_response(
+                jsonify(
+                    error={'message': 'Please provide (title) & (description)'}
+                ),
+                405
+            )
+        
+        else:
+            new_post = Post(
+                title=title,
+                desc=desc,
+                author_id=current_identity.id
+            )
+            db.session.add(new_post)
+            db.session.commit()
+
+            return make_response(
+                jsonify(data=new_post.json(), message='Post created'),
+                201
+            )
 
     @jwt_required()
     def put(self):
