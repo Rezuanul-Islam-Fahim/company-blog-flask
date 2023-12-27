@@ -38,7 +38,6 @@ class AccountApi(Resource):
         if req_json.get('email') is not None:
             user.email = req_json.get('email')
 
-        db.session.add(user)
         db.session.commit()
 
         return jsonify(user=user.json())
