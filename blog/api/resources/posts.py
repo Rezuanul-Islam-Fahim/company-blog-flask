@@ -96,7 +96,6 @@ class PostsApi(Resource):
                 if req_json.get('datetime'):
                     post.datetime = req_json.get('datetime')
 
-                db.session.add(post)
                 db.session.commit()
 
                 return jsonify(message='Post updated', data=post.json())
