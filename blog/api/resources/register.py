@@ -9,12 +9,6 @@ class RegisterApi(Resource):
 
     def post(self):
         req_json = request.get_json()
-        user = User.query.filter(
-            or_(
-                User.username == req_json.get('username'),
-                User.email == req_json.get('email')
-            )
-        ).first()
 
         if req_json.get('username') is None or \
                 req_json.get('email') is None or \
@@ -26,8 +20,16 @@ class RegisterApi(Resource):
                 status=405,
                 mimetype='application/json'
             )
-        elif user:
-            if user.username == req_json['username']:
+
+        user = User.query.filter(
+            or_(
+                User.username == req_json.get('username'),
+                User.email == req_json.get('email')
+            )
+        ).first()
+
+        if user:
+            if user.username == req_json.get('username'):
                 return Response(
                     response=json.dumps(
                         {'error': {'message': 'Username is already taken'}}
@@ -35,7 +37,7 @@ class RegisterApi(Resource):
                     status=403,
                     mimetype='application/json'
                 )
-            elif user.email == req_json['email']:
+            elif user.email == req_json.get('email'):
                 return Response(
                     response=json.dumps(
                         {'error': {'message': 'Email is already taken'}}
@@ -44,11 +46,7 @@ class RegisterApi(Resource):
                     mimetype='application/json'
                 )
 
-        new_user = User(
-            username=req_json['username'],
-            email=req_json['email'],
-            password=req_json['password']
-        )
+        new_user = User(**req_json)
         db.session.add(new_user)
         db.session.commit()
 
