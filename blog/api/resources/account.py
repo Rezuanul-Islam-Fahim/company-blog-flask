@@ -7,26 +7,20 @@ from ... import db
 
 class AccountApi(Resource):
 
-    def get(self):
-        user_id = request.args.get('user_id')
-        user = User.query.get(user_id)
+    def get(self, id):
+        user = User.query.get(id)
 
-        if user_id is None:
-            return make_response(
-                jsonify(
-                    error={'message': 'Please provide (user_id) parameter'}
-                ),
-                405
-            )
-
-        elif user:
-            return jsonify(user=user.json())
+        if user:
+            return jsonify(**user.json())
 
         else:
             return make_response(
-                jsonify(error={'message': f'No user found with id {user_id}'}),
+                jsonify(error={'message': f'No user found with id {id}'}),
                 404
             )
+
+
+class AccountUpdateApi(Resource):
 
     @jwt_required()
     def put(self):
@@ -40,4 +34,10 @@ class AccountApi(Resource):
 
         db.session.commit()
 
-        return jsonify(user=user.json())
+        return make_response(
+            jsonify(
+                message='Account updated successfully',
+                user=user.json()
+            ),
+            200
+        )
