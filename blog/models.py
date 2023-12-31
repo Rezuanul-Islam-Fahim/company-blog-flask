@@ -52,7 +52,7 @@ class Post(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), nullable=False)
-    desc = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=False)
     author_id = db.Column(
         db.Integer,
         db.ForeignKey('users.id'),
@@ -60,19 +60,19 @@ class Post(db.Model):
     )
     datetime = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
-    def __init__(self, title, desc, author_id):
+    def __init__(self, title, description, author_id):
         self.title = title
-        self.desc = desc
+        self.description = description
         self.author_id = author_id
 
     def __repr__(self):
-        return f'Title: {self.title}, datetime: {self.datetime}, desc: {self.desc}'
+        return f'Title: {self.title}, datetime: {self.datetime}, description: {self.description}'
 
     def json(self):
         return {
             'id': self.id,
             'title': self.title,
-            'description': self.desc,
+            'description': self.description,
             'author_id': self.author_id,
             'datetime': self.datetime
         }

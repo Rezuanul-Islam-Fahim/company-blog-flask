@@ -7,88 +7,27 @@ from ... import db
 
 class PostsApi(Resource):
 
-    def get(self):
-        post_id = request.args.get('post_id')
-        user_id = request.args.get('user_id')
+    def get(self, id):
 
-        if post_id:
-            post = Post.query.get(post_id)
+        post = Post.query.get(id)
 
-            if post:
-                return jsonify(data=post.json())
-            else:
-                return make_response(
-                    jsonify(
-                        error={'message': f'No post found with id {post_id}'}
-                    ),
-                    404
-                )
-
-        elif user_id:
-            user = User.query.get(user_id)
-
-            if user:
-                user_posts = Post.query.filter_by(author_id=user_id) \
-                    .order_by(Post.datetime.desc()).all()
-
-                return jsonify(data=[post.json() for post in user_posts])
-            else:
-                return make_response(
-                    jsonify(
-                        error={'message': f'No user found with id {user_id}'}
-                    ),
-                    404
-                )
-
+        if post:
+            return jsonify(data=post.json())
         else:
-            posts = Post.query.order_by(Post.datetime.desc()).all()
-
-            return jsonify(data=[post.json() for post in posts])
-
-    @jwt_required()
-    def post(self):
-        req_json = request.get_json()
-        title = req_json.get('title')
-        desc = req_json.get('description')
-
-        if title is None or desc is None:
             return make_response(
                 jsonify(
-                    error={'message': 'Please provide (title) & (description)'}
+                    error={'message': f'No post found with id {id}'}
                 ),
-                405
-            )
-        
-        else:
-            new_post = Post(
-                title=title,
-                desc=desc,
-                author_id=current_identity.id
-            )
-            db.session.add(new_post)
-            db.session.commit()
-
-            return make_response(
-                jsonify(data=new_post.json(), message='Post created'),
-                201
+                404
             )
 
     @jwt_required()
-    def put(self):
+    def put(self, id):
         req_json = request.get_json()
-        post_id = request.args.get('id')
-        post = Post.query.get(post_id)
+        post = Post.query.get(id)
 
-        if post_id is None:
-            return make_response(
-                jsonify(
-                    error={'message': 'Please provide (post_id) parameter'}
-                ),
-                405
-            )
-
-        elif post:
-            if post.author.id == current_identity.id:
+        if post:
+            if post.author == current_identity:
                 if req_json.get('title'):
                     post.title = req_json.get('title')
                 if req_json.get('description'):
@@ -110,25 +49,16 @@ class PostsApi(Resource):
 
         else:
             return make_response(
-                jsonify(error={'message': f'No post found with id {post_id}'}),
+                jsonify(error={'message': f'No post found with id {id}'}),
                 404
             )
 
     @jwt_required()
-    def delete(self):
-        post_id = request.args.get('id')
-        post = Post.query.get(post_id)
+    def delete(self, id):
+        post = Post.query.get(id)
 
-        if post_id is None:
-            return make_response(
-                jsonify(
-                    error={'message': 'Please provide (post_id) parameter'}
-                ),
-                405
-            )
-
-        elif post:
-            if post.author.id == current_identity.id:
+        if post:
+            if post.author== current_identity:
                 db.session.delete(post)
                 db.session.commit()
 
@@ -145,7 +75,61 @@ class PostsApi(Resource):
         else:
             return make_response(
                 jsonify(
-                    error={'message': f'No post found with id {post_id}'}
+                    error={'message': f'No post found with id {id}'}
                 ),
+                404
+            )
+
+
+class PostCreateApi(Resource):
+
+    @jwt_required()
+    def post(self):
+        req_json = request.get_json()
+
+        if req_json.get('title') is None or req_json.get('description') is None:
+            return make_response(
+                jsonify(
+                    error={'message': 'Please provide (title) & (description)'}
+                ),
+                405
+            )
+
+        else:
+            new_post = Post(**req_json, author_id = current_identity.id)
+
+            db.session.add(new_post)
+            db.session.commit()
+
+            return make_response(
+                jsonify(data=new_post.json(), message='Post created'),
+                201
+            )
+
+
+class AllPosts(Resource):
+
+    def get(self):
+
+        posts = Post.query.order_by(Post.datetime.desc()).all()
+
+        return jsonify(data=[post.json() for post in posts])
+
+
+class UserPosts(Resource):
+
+    def get(self, id):
+
+        user = User.query.get(id)
+
+        if user:
+            posts = Post.query.filter_by(author=user) \
+                .order_by(Post.datetime.desc()).all()
+
+            return jsonify(data=[post.json() for post in posts])
+
+        else:
+            return make_response(
+                jsonify(error={'message': f'No user found with id: {id}'}),
                 404
             )
